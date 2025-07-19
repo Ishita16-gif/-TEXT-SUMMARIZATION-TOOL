@@ -1,0 +1,25 @@
+ #text_summarizer.py
+from sumy.parsers.plaintext import PlaintextParser
+from sumy.nlp.tokenizers import Tokenizer
+from sumy.summarizers.lsa import LsaSummarizer
+
+def summarize_text(text, sentence_count=3):
+    parser = PlaintextParser.from_string(text, Tokenizer("english"))
+    summarizer = LsaSummarizer()
+    summary = summarizer(parser.document, sentence_count)
+    return " ".join(str(sentence) for sentence in summary)
+
+if __name__ == "__main__":
+    long_text = """
+    Artificial Intelligence (AI) refers to the simulation of human intelligence in machines that are programmed to think and learn.
+    These machines can perform tasks such as visual perception, speech recognition, decision-making, and language translation.
+    AI is becoming increasingly prevalent in our daily lives through applications like virtual assistants, recommendation systems,
+    autonomous vehicles, and more. There are several branches of AI, including machine learning, deep learning, natural language processing,
+    and robotics. As AI continues to evolve, it raises questions about ethics, job displacement, and the potential for superintelligent systems.
+    The development of AI technologies is driven by large datasets, powerful computing resources, and advanced algorithms.
+    While AI offers immense benefits in fields such as healthcare, finance, education, and transportation, it also requires careful regulation
+    and oversight to ensure that it is used responsibly and for the benefit of all.
+    """
+
+    print("🔍 Summarized Text:\n")
+    print(summarize_text(long_text, sentence_count=3))
